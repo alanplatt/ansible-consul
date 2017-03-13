@@ -6,6 +6,8 @@ consul_conf_dir = '/etc/consul.d'
 describe file("#{consul_conf_dir}/server/config.json") do
   it { should be_file }
   it { should be_mode 644 }
+  its(:content) { should match /"leave_on_terminate":.*false/ }
+  its(:content) { should match /"skip_leave_on_interrupt":.*true/ }
 end
 
 if os[:family] =~ /ubuntu|debian/

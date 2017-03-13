@@ -20,7 +20,8 @@ consul_encrypt_key:   "bONdJmlr7BZnWMoMoIfNng=="
 consul_nodes:                   # IPs of consul nodes
 consul_extra_opts:   ""         # e.g  "-server -bootstrap-expect 1 -ui-dir {{ consul_home }}/ui"
 consul_bind_ip:      "{{ ansible_default_ipv4.address }}"  
-consul_leave_on_terminate: true
+#consul_leave_on_terminate:
+#consul_skip_leave_on_interrupt:
 consul_bootstrap_expect: "{{ consul_nodes|length }}"
 
 consul_node_type: server
