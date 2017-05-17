@@ -4,7 +4,7 @@
   user: name={{ consul_group }} state=present
 
 - name: Create consul user
-  user: 
+  user:
     name:   "{{ consul_user }}"
     group:  "{{ consul_group }}"
     shell:  /bin/bash
@@ -33,7 +33,7 @@
     group: "{{ consul_group }}"
     mode:  0755
     state: directory
-  with_items: 
+  with_items:
     - "{{ consul_home }}"
     - "{{ consul_data_dir }}"
     - "{{ consul_logs_dir }}"
@@ -54,7 +54,7 @@
     group: root
     mode:  0755
     state: directory
-  with_items: 
+  with_items:
     - "{{ consul_conf_dir }}"
     - "{{ consul_conf_dir }}/server"
     - "{{ consul_conf_dir }}/client"
@@ -77,10 +77,10 @@
   register: pkg
 
 - name: Check consul binary exists
-  stat: 
+  stat:
     path: "{{ consul_bin_dir }}/consul"
   register: bin
-  
+
 - name: Install consul
   unarchive:
     src:  "{{ consul_home }}/{{ consul_pkg }}"
@@ -90,7 +90,7 @@
   notify: Restart consul
 
 - name: Create consul server config file
-  template: 
+  template:
     src:   server_config.json.j2
     dest:  "{{ consul_conf_dir }}/server/config.json"
     owner: root
@@ -100,7 +100,7 @@
   notify: Restart consul
 
 - name: Create consul client config file
-  template: 
+  template:
     src:   client_config.json.j2
     dest:  "{{ consul_conf_dir }}/client/config.json"
     owner: root
@@ -141,7 +141,7 @@
 #  template: src=redeploy_service.sh.j2 dest={{ consul_scripts_dir }}/redeploy_service.sh mode=0755
 
 - name: Start consul
-  service: name=consul pattern={{ consul_bin_dir }}/consul enabled=yes state=started 
+  service: name=consul pattern={{ consul_bin_dir }}/consul enabled=yes state=started
 
 - include: web_ui.yml
   when: "{{ consul_install_web_ui or consul_node_type == 'client' }}"
