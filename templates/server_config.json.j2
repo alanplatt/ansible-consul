@@ -11,5 +11,9 @@
     "enable_syslog":            {{ consul_enable_syslog|default(false)|bool|lower }},
     "leave_on_terminate":       {{ consul_leave_on_terminate|default(false if consul_node_type == "server" else true)|bool|lower}},
     "skip_leave_on_interrupt":  {{ consul_skip_leave_on_interrupt|default(true if consul_node_type == "server" else false)|bool|lower}},
-    "retry_join":               [ "{{ consul_nodes|join('", "') }}" ]
+    "retry_join":               [ "{{ consul_nodes|join('", "') }}" ],
+    "ports": {
+      "dns":                    {{ consul_ports_dns }}
+    },
+    "recursors":                {{ consul_recursors | tojson() }}
 }

@@ -89,6 +89,13 @@
   when: pkg|changed or not bin.stat.exists
   notify: Restart consul
 
+- name: Set cap_net_bind_service capability
+  capabilities:
+    state: present
+    path: "{{ consul_bin_dir }}/consul"
+    capability: cap_net_bind_service=+ep
+  when: consul_ports_dns < 1024
+
 - name: Create consul server config file
   template:
     src:   server_config.json.j2

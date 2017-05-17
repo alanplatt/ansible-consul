@@ -108,3 +108,21 @@ describe command("curl -s http://localhost:8500/v1/kv/?recurse | jq '.[] | .Key'
   its(:stdout) { should match %r(web/key1) }
   its(:stdout) { should match %r(web/key2) }
 end
+
+describe port(53) do
+  it { should be_listening }
+end
+
+describe port(8600) do
+  it { should_not be_listening }
+end
+
+describe command('dig +short @localhost `hostname`.node.consul') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/ }
+end
+
+describe command('dig +short @localhost www.microsoft.com') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/ }
+end

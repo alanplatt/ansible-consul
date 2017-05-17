@@ -102,3 +102,11 @@ describe file("#{consul_home}/ui/index.html") do
   it { should be_mode 644 }
   it { should be_owned_by consul_user }
 end
+
+describe port(53) do
+  it { should_not be_listening }
+end
+
+describe port(8600) do
+  it { should be_listening }
+end
