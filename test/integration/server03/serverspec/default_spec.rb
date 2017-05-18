@@ -38,3 +38,11 @@ describe process('consul') do
   it { should be_running }
   its(:args) { should match %r(consul agent -config-dir .*) }
 end
+
+describe port(53) do
+  it { should_not be_listening }
+end
+
+describe port(8600) do
+  it { should be_listening }
+end

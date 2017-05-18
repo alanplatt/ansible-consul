@@ -12,6 +12,8 @@
       - "172.29.129.182"
     consul_install_web_ui: true
     consul_bind_ip: "{{ ansible_eth1.ipv4.address }}"
+    consul_ports_dns: 53
+    consul_recursors: "{{ ansible_dns['nameservers'] }}"
 
   pre_tasks:
     - debug: var=inventory_hostname
